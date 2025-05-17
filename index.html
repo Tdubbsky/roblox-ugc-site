@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox UGC Connect</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #ff4757;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    .shoutout {
+      background-color: #2ed573;
+      color: white;
+      text-align: center;
+      padding: 1em;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+    }
+    .ugc-entry, .robux-request {
+      border: 1px solid #ccc;
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 6px;
+    }
+    img {
+      max-width: 100px;
+      display: block;
+    }
+    button {
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #3742fa;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+    }
+    h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Roblox UGC Connect</h1>
+  </header>
+
+  <div class="shoutout">
+    Shoutout to Tdubbsky on Roblox! Check out his awesome shirts!
+  </div>
+
+  <div class="container">
+    <h2>Advertise Your UGC</h2>
+    <form id="ugc-form">
+      <input type="text" placeholder="Your Roblox Username" required><br>
+      <input type="url" placeholder="Image URL of Your UGC" required><br>
+      <button type="submit">List My UGC</button>
+    </form>
+    <div id="ugc-list"></div>
+
+    <h2>Request Robux</h2>
+    <form id="robux-form">
+      <input type="text" placeholder="Your Roblox Username" required><br>
+      <input type="number" placeholder="How much Robux?" required><br>
+      <textarea placeholder="Why do you need the Robux?" required></textarea><br>
+      <button type="submit">Request Robux</button>
+    </form>
+    <div id="robux-list"></div>
+  </div>
+
+  <script>
+    const ugcForm = document.getElementById('ugc-form');
+    const ugcList = document.getElementById('ugc-list');
+    const robuxForm = document.getElementById('robux-form');
+    const robuxList = document.getElementById('robux-list');
+
+    ugcForm.onsubmit = (e) => {
+      e.preventDefault();
+      const username = ugcForm.elements[0].value;
+      const imgUrl = ugcForm.elements[1].value;
+      const item = document.createElement('div');
+      item.className = 'ugc-entry';
+      item.innerHTML = `
+        <strong>${username}</strong><br>
+        <img src="${imgUrl}" alt="UGC Image"><br>
+        <button onclick="scheduleMeetup('${username}')">Schedule a Meetup</button>
+      `;
+      ugcList.appendChild(item);
+      ugcForm.reset();
+    };
+
+    robuxForm.onsubmit = (e) => {
+      e.preventDefault();
+      const username = robuxForm.elements[0].value;
+      const amount = robuxForm.elements[1].value;
+      const reason = robuxForm.elements[2].value;
+      const item = document.createElement('div');
+      item.className = 'robux-request';
+      item.innerHTML = `
+        <strong>${username}</strong><br>
+        Needs <strong>${amount} Robux</strong><br>
+        Reason: ${reason}<br>
+        <button onclick="scheduleMeetup('${username}')">Donate/Meetup</button>
+      `;
+      robuxList.appendChild(item);
+      robuxForm.reset();
+    };
+
+    function scheduleMeetup(user) {
+      const game = prompt(`What game do you want to meet ${user} in?`);
+      const time = prompt(`What time would you like to meet up with ${user}?`);
+      if (game && time) {
+        alert(`Meeting with ${user} scheduled in ${game} at ${time}. Please connect on Roblox!`);
+      }
+    }
+  </script>
+</body>
+</html>
